@@ -13,7 +13,7 @@ class Hangman
     @guess_word = Hangman.generate_guess_word
     @display_guess_word = '_ ' * @guess_word.length
     @incorrect_letters = []
-    @guess
+    @guess = ''
   end
 
   def display_menu
@@ -46,11 +46,13 @@ class Hangman
     end
   end
 
-   # Read all the words in the file, then split the string in a array and delete words tha are smaller than 5 or longer than 12. Finally take 1 word from the array.
+  # Read all the words in the file, then split the string in a array
+  # and delete words tha are smaller than 5 or longer than 12.
+  # Finally take 1 word from the array.
 
-   def self.generate_guess_word
+  def self.generate_guess_word
     dic = File.read 'dictionary.txt'
-    dic = dic.split(/\n/).map { |value| value.chomp }.delete_if { |value| value.length < 5 || value.length > 12 }
+    dic = dic.split(/\n/).map(&:chomp).delete_if { |value| value.length < 5 || value.length > 12 }
     dic.sample.downcase
   end
 
@@ -76,8 +78,8 @@ class Hangman
   def play_game
     star_game if @game_over
 
-    until @life == 0
-        self.display_game
+    until @life.zero?
+      display_game
       if @guess == '1'
         @game_over = true
         @win = true
@@ -87,7 +89,7 @@ class Hangman
       return if @guess == 'exit'
     end
 
-    if life == 0
+    if life.zero?
       puts @guess_word
       puts 'YOU LOSE!'
     end
@@ -110,7 +112,7 @@ class Hangman
 
     if @guess_word.include?(str)
       @guess_word.split('').each_with_index do |value, index|
-        @display_guess_word[index * 2] = str if value === str
+        @display_guess_word[index * 2] = str if value == str
       end
     else
       @life -= 1
@@ -142,7 +144,6 @@ class Hangman
     @incorrect_letters = []
     @correct_letters = []
   end
-
 end
 
 game = Hangman.new

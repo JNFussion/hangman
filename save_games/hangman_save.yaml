@@ -2,6 +2,7 @@
 win: false
 game_over: false
 life: 8
-guess_word: hygrometer
-display_guess_word: '_ _ _ _ _ _ _ _ _ _ '
+guess_word: glaze
+display_guess_word: '_ _ _ _ _ '
 incorrect_letters: []
+guess: ''
